@@ -1,0 +1,98 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static class Tile {
+        int numBlack = 0;
+        int numWhite = 0;
+        boolean isBlack = false;
+        boolean isGrey = false;
+
+        public Tile() {
+            this.numBlack = 0;
+            this.numWhite = 0;
+            this.isBlack = true;
+            this.numBlack = 0;
+            isGrey = false;
+
+            // TODO Auto-generated constructor stub
+        }
+
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st;
+
+        Tile[] arr = new Tile[100001];
+        int idx = 50000;
+        int N = Integer.parseInt(br.readLine());
+
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            int num = Integer.parseInt(st.nextToken());
+            String dir = st.nextToken();
+            int dirPM = dir.equals("R") ? 1 : -1; // R: black, L: white
+
+            if (dirPM > 0) {
+                for (int j = 0; j < num; j++) {
+                    if (arr[idx] == null)
+                        arr[idx] = new Tile();
+                    arr[idx].numBlack++;
+                    arr[idx].isBlack = true;
+                    idx++;
+                }
+                idx--;
+            } // 오른쪽으로 이동하며 검정칠
+            else {
+                for (int j = 0; j < num; j++) {
+                    if (arr[idx] == null)
+                        arr[idx] = new Tile();
+                    arr[idx].numWhite++;
+                    arr[idx].isBlack = false;
+                    idx--;
+                }
+                idx++;
+            } // 왼쪽으로 이동하며 하양칠
+        }
+
+        for (Tile tile : arr) {
+            if (tile != null && (tile.numBlack >= 2) && (tile.numWhite >= 2)) {
+                tile.isGrey = true;
+            }
+        }
+
+//        for (Tile tile : arr) {
+//            if (tile != null) {
+//                System.out.println("tile.numWhile: " + tile.numWhite + " tile.numBlack: " + tile.numBlack + " black: "
+//                        + tile.isBlack + " grey: " + tile.isGrey);
+//            }
+//        }
+
+        int numBlackTile = 0;
+        int numWhiteTile = 0;
+        int numGreyTile = 0;
+
+        for (Tile tile : arr) {
+            if (tile != null) {
+                if (tile.isGrey) {
+                    numGreyTile++;
+                } else {
+                    if (tile.isBlack)
+                        numBlackTile++;
+                    else
+                        numWhiteTile++;
+                }
+            }
+        }
+
+        bw.write(numWhiteTile + " " + numBlackTile + " " + numGreyTile + "\n");
+        bw.flush();
+        bw.close();
+        br.close();
+    }
+}
