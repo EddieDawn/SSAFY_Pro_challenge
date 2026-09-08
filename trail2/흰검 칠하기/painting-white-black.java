@@ -28,8 +28,8 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st;
 
-        Tile[] arr = new Tile[100001];
-        int idx = 50000;
+        Tile[] arr = new Tile[200001];
+        int idx = 100000;
         int N = Integer.parseInt(br.readLine());
 
         for (int i = 0; i < N; i++) {
